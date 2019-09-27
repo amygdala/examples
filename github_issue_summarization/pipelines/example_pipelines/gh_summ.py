@@ -47,7 +47,8 @@ def gh_summ(  #pylint: disable=unused-argument
   working_dir='YOUR_GCS_DIR_HERE',
   checkpoint_dir='gs://aju-dev-demos-codelabs/kubecon/model_output_tbase.bak2019000',
   deploy_webapp='true',
-  data_dir='gs://aju-dev-demos-codelabs/kubecon/t2t_data_gh_all/'
+  data_dir='gs://aju-dev-demos-codelabs/kubecon/t2t_data_gh_all/',
+  md_server_namespace='kubeflow'
   ):
 
 
@@ -64,7 +65,8 @@ def gh_summ(  #pylint: disable=unused-argument
     log_type=DATASET,
     workspace_name=WORKSPACE_NAME,
     run_name='{{workflow.name}}',
-    data_uri=data_dir
+    data_uri=data_dir,
+    server_namespace=md_server_namespace
     )
 
   train = train_op(
@@ -81,7 +83,8 @@ def gh_summ(  #pylint: disable=unused-argument
     log_type=MODEL,
     workspace_name=WORKSPACE_NAME,
     run_name='{{workflow.name}}',
-    model_uri='%s/%s/model_output' % (working_dir, '{{workflow.name}}')
+    model_uri='%s/%s/model_output' % (working_dir, '{{workflow.name}}'),
+    server_namespace=md_server_namespace
     )
 
   serve = dsl.ContainerOp(

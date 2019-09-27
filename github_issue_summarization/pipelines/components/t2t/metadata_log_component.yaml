@@ -28,6 +28,9 @@ inputs:
   - name: run_name
     description: '...'
     type: String
+  - name: server_namespace
+    description: '...'
+    type: String
   - name: data_uri
     description: '...'
     type: GCSPath
@@ -38,13 +41,14 @@ inputs:
     default: ''
 implementation:
   container:
-    image: gcr.io/google-samples/ml-pipeline-metadata-logger:v1
+    image: gcr.io/aju-vtests2/ml-pipeline-metadata-logger:v2
     args: [
       --log-type, {inputValue: log_type},
       --workspace-name, {inputValue: workspace_name},
       --run-name, {inputValue: run_name},
       --data-uri, {inputValue: data_uri},
       --model-uri, {inputValue: model_uri}
+      --server-namespace, {inputValue: server_namespace}
     ]
     env:
       KFP_POD_NAME: "{{pod.name}}"

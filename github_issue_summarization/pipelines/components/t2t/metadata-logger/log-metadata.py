@@ -21,13 +21,16 @@ from kubeflow.metadata import metadata #pylint: disable=no-name-in-module
 
 DATASET = 'dataset'
 MODEL = 'model'
-METADATA_SERVICE = "metadata-service.kubeflow:8080"
+# METADATA_SERVICE = "metadata-service.kubeflow:8080"
+METADATA_SERVICE = "metadata-service.kubeflow.svc.cluster.local:8080"
 
 
-def get_or_create_workspace(ws_name):
+def get_or_create_workspace(ws_name, server_namespace):
   return metadata.Workspace(
     # Connect to metadata-service in namesapce kubeflow in the k8s cluster.
-    backend_url_prefix=METADATA_SERVICE,
+    metadata_service = "metadata-service.%s.svc.cluster.local:8080" % server_namespace
+    logging.info("metadata service: %s", metadata_service)
+    backend_url_prefix=metadata_service,
     name=ws_name,
     description="a workspace for the GitHub summarization task",
     labels={"n1": "v1"})
@@ -89,6 +92,10 @@ def main():
       help='...',
       required=True)
   parser.add_argument(
+      '--server-namespace',
+      help='...',
+      required=True)
+  parser.add_argument(
       '--data-uri',
       help='...',
       )
@@ -104,7 +111,7 @@ def main():
   parser.add_argument('--zone', type=str, help='zone of the kubeflow cluster.')
   args = parser.parse_args()
 
-  ws = get_or_create_workspace(args.workspace_name)
+  ws = get_or_create_workspace(args.workspace_name, args.server_namespace)
   ws_run = get_or_create_workspace_run(ws, args.run_name)
 
   if args.log_type.lower() == DATASET:
