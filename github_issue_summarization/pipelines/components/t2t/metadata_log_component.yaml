@@ -47,7 +47,7 @@ implementation:
       --workspace-name, {inputValue: workspace_name},
       --run-name, {inputValue: run_name},
       --data-uri, {inputValue: data_uri},
-      --model-uri, {inputValue: model_uri}
+      --model-uri, {inputValue: model_uri},
       --server-namespace, {inputValue: server_namespace}
     ]
     env:
