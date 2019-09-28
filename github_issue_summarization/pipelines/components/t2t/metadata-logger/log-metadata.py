@@ -26,10 +26,10 @@ METADATA_SERVICE = "metadata-service.kubeflow.svc.cluster.local:8080"
 
 
 def get_or_create_workspace(ws_name, server_namespace):
+  metadata_service = "metadata-service.%s.svc.cluster.local:8080" % server_namespace
+  logging.info("metadata service: %s", metadata_service)
   return metadata.Workspace(
     # Connect to metadata-service in namesapce kubeflow in the k8s cluster.
-    metadata_service = "metadata-service.%s.svc.cluster.local:8080" % server_namespace
-    logging.info("metadata service: %s", metadata_service)
     backend_url_prefix=metadata_service,
     name=ws_name,
     description="a workspace for the GitHub summarization task",
