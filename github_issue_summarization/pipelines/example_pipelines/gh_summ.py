@@ -26,11 +26,11 @@ DATASET = 'dataset'
 MODEL = 'model'
 
 copydata_op = comp.load_component_from_url(
-  'https://raw.githubusercontent.com/amygdala/kubeflow-examples/ghpl_update/github_issue_summarization/pipelines/components/t2t/datacopy_component.yaml'  # pylint: disable=line-too-long
+  'https://raw.githubusercontent.com/kubeflow/examples/master/github_issue_summarization/pipelines/components/t2t/datacopy_component.yaml'  # pylint: disable=line-too-long
   )
 
 train_op = comp.load_component_from_url(
-  'https://raw.githubusercontent.com/amygdala/kubeflow-examples/ghpl_update/github_issue_summarization/pipelines/components/t2t/train_component.yaml' # pylint: disable=line-too-long
+  'https://raw.githubusercontent.com/kubeflow/examples/master/github_issue_summarization/pipelines/components/t2t/train_component.yaml' # pylint: disable=line-too-long
   )
 
 metadata_log_op = comp.load_component_from_url(
